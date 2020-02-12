@@ -26,7 +26,7 @@
 cmake_minimum_required(VERSION 3.6)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_MAKE_PROGRAM "make -j 4")
+#set(CMAKE_MAKE_PROGRAM "make -j 4")
 set(APP_NAME MyTetris)
 
 project(${APP_NAME})
