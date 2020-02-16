@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build and run debug",
+            "label": "build and run debug cocos",
             "type": "shell",
             "command": "cocos run --proj-dir ./ -p linux --mode debug",
             "group": {
@@ -16,7 +16,7 @@
             ]
         },
         {
-            "label": "build and run release",
+            "label": "build and run release cocos",
             "type": "shell",
             "command": "cocos run --proj-dir ./ -p linux --mode release",
             "group": {
@@ -26,6 +26,50 @@
             "problemMatcher": [
                 "$gcc"
             ]
+        },
+        {
+            "label": "build debug cmake",
+            "type": "shell",
+            "command": "cd build/debug && cmake --build ./ -j 8",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "build release cmake",
+            "type": "shell",
+            "command": "cd build/release && cmake --build ./ -j 8",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "init debug",
+            "type": "shell",
+            "command": "cd build/debug && cmake ../.. -DCMAKE_BUILD_TYPE=Debug",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "init release",
+            "type": "shell",
+            "command": "cd build/release && cmake ../.. -DCMAKE_BUILD_TYPE=Release",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
         },
         {
             "label": "test env var",

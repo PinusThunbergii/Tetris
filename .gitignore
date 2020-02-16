@@ -1,2 +1,2 @@
-bin/
-linux-build/
+build/debug/*
+build/release/*
