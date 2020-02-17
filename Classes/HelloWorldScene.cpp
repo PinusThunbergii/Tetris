@@ -86,6 +86,7 @@ bool HelloWorld::init()
     // create and initialize a label
 
     auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    auto label_l = Label::createWithTTF("LOL", "fonts/Marker Felt.ttf", 64);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -98,6 +99,9 @@ bool HelloWorld::init()
 
         // add the label as a child to this layer
         this->addChild(label, 1);
+        label_l->setPosition(Vec2(200, 200));
+        label_l->setAnchorPoint(Vec2(0,0));
+        this->addChild(label_l, 1);
     }
 
     // add "HelloWorld" splash screen"

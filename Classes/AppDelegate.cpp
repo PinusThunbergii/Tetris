@@ -24,6 +24,7 @@
 
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "TouchScene.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -38,6 +39,8 @@ static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+static cocos2d::Size HDResolutionSize = cocos2d::Size(1280, 720);
+static cocos2d::Size fullHDResolutionSize = cocos2d::Size(1920, 720);
 
 AppDelegate::AppDelegate()
 {
@@ -76,10 +79,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLViewImpl::createWithRect("MyTetris", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
         glview = GLViewImpl::create("MyTetris");
+        //glview = GLViewImpl::createWithFullScreen("MyTetris");
 #endif
         director->setOpenGLView(glview);
     }
-
+    dynamic_cast<GLViewImpl*>(director->getOpenGLView())->setFullscreen();
+    dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1920, 1080);
     // turn on display FPS
     director->setDisplayStats(true);
 
@@ -108,8 +113,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
-
+    //auto scene = HelloWorld::createScene();
+    auto scene = TouchScene::createScene();
     // run
     director->runWithScene(scene);
 
