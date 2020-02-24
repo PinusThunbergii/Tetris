@@ -18,11 +18,20 @@ bool StartScene::init()
                         visibleSize.height - label->getContentSize().height/2 - offset);
     label->setPosition(pos);
     this->addChild(label, 1);
-
+    auto button = ui::Button::create();
+    button->setTitleText("Click");
+    button->setPosition(Vec2(100, 100));
+    //button->addClickEventListener()
+    this->addChild(button);
     return true;
 }
 
 Scene *StartScene::createScene()
 {
     return StartScene::create();
+}
+
+void StartScene::onClick(Ref* pSender)
+{
+    CCLOG("CLICK");
 }

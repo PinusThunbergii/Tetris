@@ -84,6 +84,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
         director->setOpenGLView(glview);
     }
+    glview->setIcon("icons/atom.png");
+    
     //dynamic_cast<GLViewImpl*>(director->getOpenGLView())->setFullscreen();
     //dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1920, 1080);
     dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1920/2, 1080/2);
