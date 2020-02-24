@@ -84,8 +84,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
         director->setOpenGLView(glview);
     }
-    dynamic_cast<GLViewImpl*>(director->getOpenGLView())->setFullscreen();
-    dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1920, 1080);
+    //dynamic_cast<GLViewImpl*>(director->getOpenGLView())->setFullscreen();
+    //dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1920, 1080);
+    dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1920/2, 1080/2);
     // turn on display FPS
     director->setDisplayStats(true);
 
