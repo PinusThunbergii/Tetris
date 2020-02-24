@@ -3,7 +3,7 @@
 #include "ui/CocosGUI.h"
 
 using namespace cocos2d;
-
+using namespace ui;
 class StartScene: public Scene
 {
 public:
@@ -11,7 +11,7 @@ public:
     virtual bool init();
     CREATE_FUNC(StartScene);
 
-    void onClick(Ref* pSender);
+    void onClick(Ref* pSender, Widget::TouchEventType type);
 private:
 
 protected:

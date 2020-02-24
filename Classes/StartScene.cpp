@@ -21,7 +21,9 @@ bool StartScene::init()
     auto button = ui::Button::create();
     button->setTitleText("Click");
     button->setPosition(Vec2(100, 100));
-    //button->addClickEventListener()
+    //button->addClickEventListener(CC_CALLBACK_1(StartScene::onClick, this));
+    button->addTouchEventListener(CC_CALLBACK_2(StartScene::onClick, this) );
+
     this->addChild(button);
     return true;
 }
@@ -31,7 +33,7 @@ Scene *StartScene::createScene()
     return StartScene::create();
 }
 
-void StartScene::onClick(Ref* pSender)
+void StartScene::onClick(Ref* pSender, Widget::TouchEventType type)
 {
     CCLOG("CLICK");
 }
