@@ -21,6 +21,7 @@ bool StartScene::init()
     auto button = ui::Button::create();
     button->setTitleText("Click");
     button->setPosition(Vec2(100, 100));
+    //http://www.pixnbgames.com/blog/c/how-to-add-event-listener-to-button-cocos2d-x-3-and-cpp/
     //button->addClickEventListener(CC_CALLBACK_1(StartScene::onClick, this));
     button->addTouchEventListener(CC_CALLBACK_2(StartScene::onClick, this) );
 
