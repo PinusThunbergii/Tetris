@@ -1,4 +1,6 @@
 #include "StartScene.h"
+#include "SettingsScene.h"
+#include "GameScene.h"
 
 bool StartScene::init()
 {
@@ -6,65 +8,50 @@ bool StartScene::init()
     {
         return false;
     }
-    isFullScreen = false;
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    screenSize = Director::getInstance()->getVisibleSize();
+    Vec2 center = Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    auto label = Label::createWithTTF("Tetris", "fonts/Marker Felt.ttf", 60);
+
+    //"Tetris" label
+    auto label = Label::createWithTTF("Tetris", "fonts/Marker Felt.ttf", visibleSize.height/6.0f);
     label->setTextColor(Color4B::RED);
     label->setAnchorPoint(Vec2(0, 0));
     float offset = 10.0f;
     Vec2 pos = Vec2(visibleSize.width / 2.0f - label->getContentSize().width / 2,
-                    visibleSize.height - label->getContentSize().height / 2 - offset);
+                    visibleSize.height - label->getContentSize().height );
     label->setPosition(pos);
     this->addChild(label, 1);
-    auto button = ui::Button::create();
-    button->setTitleText("Click");
-    button->setPosition(Vec2(100, 100));
 
-    //http://www.pixnbgames.com/blog/c/how-to-add-event-listener-to-button-cocos2d-x-3-and-cpp/
-    //button->addClickEventListener(CC_CALLBACK_1(StartScene::onClick, this));
-    button->addTouchEventListener(CC_CALLBACK_2(StartScene::onClick, this));
+    //Menu
+    
+    Vector<MenuItem*> items;
+    auto startGameMenuItem = MenuItemFont::create("Start");
+    auto settingsMenuItem = MenuItemFont::create("Settings");
+    settingsMenuItem->setCallback(CC_CALLBACK_0(onClick_goToSettings, this));
+    startGameMenuItem->setCallback([&](Ref* sender){Director::getInstance()->replaceScene(GameScene::create());});
+    items.pushBack(settingsMenuItem);
+    items.pushBack(startGameMenuItem);
+    
 
-    this->addChild(button);
+    menu = Menu::createWithArray(items);
+    menu->setPosition(center.x, center.y);
+    int space = 60;
+    for(int i = 0; i < menu->getChildrenCount(); i++)
+    {
+        Node* temp = menu->getChildren().at(i);
+        temp->setPosition(0, i * space);
+    }
+    this->addChild(menu, -1);
 
-    Vec2 center = Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
-    //polygonInfo.setRect(Rect(0, 0, 40, 40));
-    //sprite = Sprite::create("sprites/bird.png", Rect(center, Size(40, 40)));
-    sprite = Sprite::create("sprites/bird.png");
-    //auto pinfo = AutoPolygon::generatePolygon("sprites/bird.png");
-    //sprite = Sprite::create(pinfo);
-   
-    //auto rt = RenderTexture::create(100, 100);
-    //rt->begin();
-    //sprite->visit();
-    //rt->end();
-    //sprite->removeFromParent();
-    //CC_SAFE_RELEASE(sprite);
-    //sprite = Sprite::createWithTexture(rt->getSprite()->getTexture());
-
-    sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    sprite->setContentSize(Size(40, 40));
-    sprite->setScale(1.0f);
-    sprite->setPosition(center);
-
-    this->addChild(sprite, -2);
-
-    //dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setCursorVisible(true);
-
-    //checkBox = CheckBox::create("icons/check_blank.png", "icons/check.png");
-    checkBox = CheckBox::create("icons/CheckBox_Normal.png", 
-                                "icons/CheckBox_Press.png",
-                                "icons/CheckBoxNode_Normal.png", 
-                                "icons/CheckBoxNode_Disable.png", 
-                                "icons/CheckBox_Disable.png");
-
-    checkBox->addTouchEventListener(CC_CALLBACK_2(StartScene::toggleCheckbox, this));
-    checkBox->setPosition(Vec2(center.x, 100));
-    //checkBox->setScale(0.2);
-    this->addChild(checkBox, -1);
-
-    this->scheduleUpdate();
+    //Close button
+    closeButton = Button::create("icons/exit_unselected.png", "icons/exit_selected.png");
+    closeButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_RIGHT);
+    std::cout << closeButton->getContentSize().width << " " << closeButton->getContentSize().height << std::endl;
+    closeButton->setScale(visibleSize.height/3000);
+    closeButton->setPosition(Vec2(visibleSize.width, 0));
+    closeButton->addClickEventListener(CC_CALLBACK_0(onClick_closeButton, this));
+    this->addChild(closeButton, -1);
+    
     return true;
 }
 
@@ -73,68 +60,17 @@ Scene* StartScene::createScene()
     return StartScene::create();
 }
 
-void StartScene::onClick(Ref *pSender, Widget::TouchEventType type)
+void StartScene::onClick_closeButton(Ref * pSender)
 {
-    switch (type)
-    {
-    case Widget::TouchEventType::BEGAN:
-        /* code */
-        break;
-    case Widget::TouchEventType::ENDED:
-    {
-        CCLOG("CLICK");
-        sprite->setRotation(sprite->getRotation() + 10.0f);
-        sprite->setScale(sprite->getScale() + 0.1f);
-        auto mv = MoveBy::create(2, Vec2(100.0f, 100.0f));
-        auto mv1 = MoveBy::create(2, Vec2(-100.0f, -100.0f));
-        auto delay = DelayTime::create(1);
-        auto mv2 = RotateBy::create(1, 135.0f);
-        auto seq = Sequence::create(mv, delay, mv2, mv1, nullptr);
-        sprite->runAction(seq);
-        break;
-    }
-        
-    case Widget::TouchEventType::CANCELED:
-        /* code */
-        break;
-    case Widget::TouchEventType::MOVED:
-        /* code */
-        break;
-    default:
-        break;
-    }
+    Director::getInstance()->end();
 }
 
-void StartScene::update(float dt)
+void StartScene::onClick_startGameLabel(Ref* sender)
 {
-    std::cout << "Update! " << dt << std::endl;
+    std::cout << "Not implemented yet(" << std::endl;
 }
 
-void StartScene::toggleCheckbox(Ref* pSender, Widget::TouchEventType type)
+void StartScene::onClick_goToSettings(Ref* sender)
 {
-    std::cout << "checkbox" << std::endl;
-    switch (type)
-    {
-    case Widget::TouchEventType::BEGAN:
-        /* code */
-        break;
-    case Widget::TouchEventType::ENDED:
-    {
-        isFullScreen = !isFullScreen;
-        if(isFullScreen)
-            dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFullscreen();
-        else
-            dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setWindowed(screenSize.width, screenSize.height);
-        break;
-    }
-        
-    case Widget::TouchEventType::CANCELED:
-        /* code */
-        break;
-    case Widget::TouchEventType::MOVED:
-        /* code */
-        break;
-    default:
-        break;
-    }
+    Director::getInstance()->replaceScene(SettingsScene::createScene());
 }

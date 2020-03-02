@@ -11,16 +11,13 @@ public:
     static Scene* createScene();
     virtual bool init();
     CREATE_FUNC(StartScene);
-
-    void onClick(Ref* pSender, Widget::TouchEventType type);
-    void toggleCheckbox(Ref* pSender, Widget::TouchEventType type);
-    void update(float dt);
+   
 private:
-    Sprite* sprite;
-    CheckBox* checkBox;
-    bool isFullScreen;
-    Size screenSize;
-    Menu menu;
+    Menu* menu;
+    Button* closeButton;
+    static void onClick_closeButton(Ref* sender);
+    static void onClick_startGameLabel(Ref* sender);
+    static void onClick_goToSettings(Ref* sender);
 protected:
 
 };

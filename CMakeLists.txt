@@ -60,6 +60,7 @@ list(APPEND GAME_SOURCE
      Classes/TouchScene.cpp
      Classes/StartScene.cpp
      Classes/SettingsScene.cpp
+     Classes/GameScene.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -67,6 +68,7 @@ list(APPEND GAME_HEADER
      Classes/TouchScene.h
      Classes/StartScene.h
      Classes/SettingsScene.h
+     Classes/GameScene.h
      )
 
 if(ANDROID)
