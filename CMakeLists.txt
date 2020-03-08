@@ -61,6 +61,7 @@ list(APPEND GAME_SOURCE
      Classes/StartScene.cpp
      Classes/SettingsScene.cpp
      Classes/GameScene.cpp
+     Classes/Shape.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -69,6 +70,7 @@ list(APPEND GAME_HEADER
      Classes/StartScene.h
      Classes/SettingsScene.h
      Classes/GameScene.h
+     Classes/Shape.h
      )
 
 if(ANDROID)

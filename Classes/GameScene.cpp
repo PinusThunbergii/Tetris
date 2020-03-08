@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "StartScene.h"
+#include "Shape.h"
 
 bool GameScene::init()
 {
@@ -29,6 +30,8 @@ bool GameScene::init()
     eventListenerKeyBoard->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressed, this);
     eventListenerKeyBoard->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleased, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListenerKeyBoard, this);
+    
+
 
     this->scheduleUpdate();
     return true;
