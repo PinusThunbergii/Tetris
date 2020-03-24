@@ -61,7 +61,10 @@ list(APPEND GAME_SOURCE
      Classes/StartScene.cpp
      Classes/SettingsScene.cpp
      Classes/GameScene.cpp
-     Classes/Shape.cpp
+     #Classes/Shape.cpp
+     Classes/GameFieldView.cpp
+     Classes/GameFieldModel.cpp
+     Classes/Figures.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -70,7 +73,10 @@ list(APPEND GAME_HEADER
      Classes/StartScene.h
      Classes/SettingsScene.h
      Classes/GameScene.h
-     Classes/Shape.h
+     #Classes/Shape.h
+     Classes/GameFieldView.h
+     Classes/GameFieldModel.h
+     Classes/Figures.h
      )
 
 if(ANDROID)

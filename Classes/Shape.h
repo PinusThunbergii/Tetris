@@ -19,4 +19,4 @@ protected:
 
 };
 
-const Shape I_shape;
+//const Shape I_shape;

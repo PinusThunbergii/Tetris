@@ -31,8 +31,15 @@ bool GameScene::init()
     eventListenerKeyBoard->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleased, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListenerKeyBoard, this);
     
-
-
+    fieldModel = new GameFieldModel(10, 22);
+    fieldView = GameFieldView::createWithModel(fieldModel);
+    fieldView->setModel(fieldModel);
+    //fieldView->setPosition(Vec2(center.x, visibleSize.height));
+    fieldView->setPosition(center);
+    fieldView->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
+    //Size size = fieldView->getContentSize();
+    //std::cout << size.width << " " << size.height << std::endl;
+    this->addChild(fieldView);
     this->scheduleUpdate();
     return true;
 }
