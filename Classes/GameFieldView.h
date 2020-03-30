@@ -5,7 +5,7 @@
 
 using namespace cocos2d;
 
-class GameFieldView: public Layer
+class GameFieldView: public Node
 {
 public:
     virtual bool init();
@@ -20,4 +20,8 @@ private:
     void drawField();
     GameFieldView();
     GameFieldView(GameFieldModel* pModel);
+    int cell_size;
+    int borderWidth;
+    Color4F borderColor;
+    Color4F infillColor;
 };

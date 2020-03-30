@@ -35,10 +35,11 @@ bool GameScene::init()
     fieldView = GameFieldView::createWithModel(fieldModel);
     fieldView->setModel(fieldModel);
     //fieldView->setPosition(Vec2(center.x, visibleSize.height));
+    fieldView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     fieldView->setPosition(center);
-    fieldView->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
-    //Size size = fieldView->getContentSize();
-    //std::cout << size.width << " " << size.height << std::endl;
+    
+    Size size = fieldView->getContentSize();
+    std::cout << size.width << " " << size.height << std::endl;
     this->addChild(fieldView);
     this->scheduleUpdate();
     return true;

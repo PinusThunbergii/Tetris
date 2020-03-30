@@ -15,7 +15,7 @@ public:
 private:
     int width;
     int height;
-    std::vector<std::vector<int>> logic_filed;
+    std::vector<std::vector<int>> logic_field;
 protected:
 
 };

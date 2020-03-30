@@ -1,11 +1,18 @@
 #include "GameFieldView.h"
 
-GameFieldView::GameFieldView()
+GameFieldView::GameFieldView(): 
+    cell_size(20), borderWidth(1), 
+    borderColor(Color4F::BLUE), infillColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f))
 {
 }
-GameFieldView::GameFieldView(GameFieldModel *pModel)
+
+GameFieldView::GameFieldView(GameFieldModel *pModel): GameFieldView()
 {
     this->setModel(pModel);
+    int column_count = pFieldModel->getWidth();
+    int row_count = pFieldModel->getHeight();
+    Size view_size(float(column_count * cell_size), float(row_count * cell_size));
+    this->setContentSize(view_size);
 }
 
 GameFieldView *GameFieldView::createWithModel(GameFieldModel *pModel)
@@ -26,7 +33,7 @@ GameFieldView *GameFieldView::createWithModel(GameFieldModel *pModel)
 bool GameFieldView::init()
 {
     //Super init
-    if (!Layer::init())
+    if (!Node::init())
     {
         return false;
     }
@@ -55,24 +62,14 @@ void GameFieldView::setModel(GameFieldModel *pModel)
 
 void GameFieldView::drawField()
 {
-    int borderWidth = 1;
-    Color4F borderColor = Color4F::BLUE;
-    Color4F infillColor = Color4F(0.0f, 0.0f, 0.0f, 0.0f);
-    int width = pFieldModel->getWidth();
-    int heigth = pFieldModel->getHeight();
-    int cell_size = 10;
+    int column_count = pFieldModel->getWidth();
+    int row_count = pFieldModel->getHeight();
 
     auto rectNode = DrawNode::create();
-    /*Vec2 rectangle[4];
-    rectangle[0] = Vec2(0, 0);
-    rectangle[1] = Vec2(100, 0);
-    rectangle[2] = Vec2(100, 100);
-    rectangle[3] = Vec2(0, 100);*/
 
-    //rectNode->drawPolygon(rectangle, 4, Color4F::BLACK, 3, Color4F::MAGENTA);
-    for (int y = 0; y < heigth; y++)
+    for (int y = 0; y < row_count; y++)
     {
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < column_count; x++)
         {
             Vec2 rectangle[4];
             rectangle[0] = Vec2(x * cell_size, y * cell_size);

@@ -1,22 +1,23 @@
 #pragma once
 #include "cocos2d.h"
+#include <vector>
 
 using namespace cocos2d;
 
-class Shape: public Sprite
+class Shape
 {
 public:
     Shape();
-    virtual ~Shape();
-    static Shape* create(Vector<Vec2> mask, int size, Color4B color, const std::string& filename);
-    void rotate();
+    void rotateClockwise(); //+>
+    void rotateCounterClockwise();//<+
 private:
-    Color4B color;
-    int size;
-    Vector<Vec2> mask;
-    Vec2 position;
+    int row_count;
+    int column_count;
+    Color4F color;
+    std::vector<std::vector<int>> mat;  
+    int x_position;
+    int y_position;
 protected:
 
 };
 
-//const Shape I_shape;
