@@ -15,10 +15,6 @@ void Shape::rotateClockwise()
     if(rot_position > 3)
         rot_position = 0;
 
-#ifdef SHAPE_DEBUG
-    print_2d_vec(mat);
-#endif // SHAPE_DEBUG
-
     if(row_count == column_count) // if square
     {
         std::vector<std::vector<int>> new_mat;
@@ -38,6 +34,7 @@ void Shape::rotateClockwise()
 
 #ifdef SHAPE_DEBUG
     print_2d_vec(mat);
+    std::cout << rot_position << std::endl;
 #endif // SHAPE_DEBUG
 }
 
@@ -46,10 +43,6 @@ void Shape::rotateCounterClockwise()
     rot_position--;
     if(rot_position < 0)
         rot_position = 3;
-
-#ifdef SHAPE_DEBUG
-    print_2d_vec(mat);
-#endif // SHAPE_DEBUG
 
     if(row_count == column_count) // if square
     {
@@ -71,6 +64,7 @@ void Shape::rotateCounterClockwise()
     
 #ifdef SHAPE_DEBUG
     print_2d_vec(mat);
+    std::cout << rot_position << std::endl;
 #endif // SHAPE_DEBUG
 }
 

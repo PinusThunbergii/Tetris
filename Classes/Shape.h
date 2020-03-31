@@ -34,13 +34,6 @@ protected:
 
 };
 
-
-/*
-Shape S(3, 3, Color4F::MAGENTA,
-    std::vector<std::vector<int>>{{0, 0, 0}, {1, 1, 1}, {1, 0, 0}}, 
-    std::vector<std::vector<int>>{{0, 0}, {1, 1}, {1, 0}});
-*/
-
 static Shape I(4, 4, Color4F::MAGENTA,
     std::vector<std::vector<int>>{{0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}}, 
     std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});
@@ -48,3 +41,23 @@ static Shape I(4, 4, Color4F::MAGENTA,
 static Shape L(3, 3, Color4F::MAGENTA,
     std::vector<std::vector<int>>{{0, 0, 1}, {1, 1, 1}, {0, 0, 0}}, 
     std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});
+
+static Shape J(3, 3, Color4F::MAGENTA,
+    std::vector<std::vector<int>>{{1, 0, 0}, {1, 1, 1}, {0, 0, 0}}, 
+    std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});   
+
+static Shape O(2, 2, Color4F::MAGENTA,
+    std::vector<std::vector<int>>{{1, 1}, {1, 1}}, 
+    std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});   
+
+static Shape S(3, 3, Color4F::MAGENTA,
+    std::vector<std::vector<int>>{{0, 1, 1}, {1, 1, 0}, {0, 0, 0}}, 
+    std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});       
+
+static Shape Z(3, 3, Color4F::MAGENTA,
+    std::vector<std::vector<int>>{{1, 1, 0}, {0, 1, 1}, {0, 0, 0}}, 
+    std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});   
+
+static Shape T(3, 3, Color4F::MAGENTA,
+    std::vector<std::vector<int>>{{0, 1, 0}, {1, 1, 1}, {0, 0, 0}}, 
+    std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});       

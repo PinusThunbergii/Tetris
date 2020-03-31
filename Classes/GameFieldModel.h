@@ -1,8 +1,10 @@
 #pragma once
-#include "cocos2d.h"
 #include <vector>
 #include <random>
 #include <iostream>
+#include "cocos2d.h"
+
+#include "GameFieldView.h"
 
 class GameFieldModel
 {
@@ -16,11 +18,14 @@ public:
     void setWidth(int width);
     int& operator()(size_t i, size_t j);
     std::vector<std::vector<int>> getField() const;
+    void Update();
+    void AddView();
 private:
     int width;
     int height;
     std::vector<std::vector<int>> logic_field;
     const int hidden_rows = 2;
+    void notifyView();
 protected:
 
 };

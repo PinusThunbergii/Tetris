@@ -35,14 +35,15 @@ bool GameScene::init()
     std::vector<std::vector<int>>{{0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}}, 
     std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});
     */
-    L.rotateClockwise();
-    L.rotateClockwise();
-    L.rotateClockwise();
+    //L.rotateClockwise();
+    //L.rotateClockwise();
+    //L.rotateClockwise();
     std::cout << "===========================" << std::endl;
     L.rotateCounterClockwise();
     L.rotateCounterClockwise();
     L.rotateCounterClockwise();
-
+    L.rotateCounterClockwise();
+    L.rotateCounterClockwise();
     fieldModel = new GameFieldModel(10, 20);
     fieldView = GameFieldView::createWithModel(fieldModel);
     fieldView->setModel(fieldModel);
@@ -102,8 +103,8 @@ void GameScene::keyReleased(EventKeyboard::KeyCode keyCode, Event *event)
 
 void GameScene::update(float dt)
 {
-    std::cout << "Update interval: " << dt << std::endl;
-    Vec2 boxPosition = box->getPosition();
+    /*std::cout << "Update interval: " << dt << std::endl;
+    Vec2 boxPosition = box->getPosition();*/
     //if(boxPosition.x <= 0 || boxPosition.y <= 0)
 }
 
