@@ -66,6 +66,7 @@ void GameFieldView::drawField()
     int row_count = pFieldModel->getHeight();
 
     auto rectNode = DrawNode::create();
+    Color4F currentInfillColor;
 
     for (int y = 0; y < row_count; y++)
     {
@@ -76,7 +77,31 @@ void GameFieldView::drawField()
             rectangle[1] = Vec2(x * cell_size + cell_size, y * cell_size);
             rectangle[2] = Vec2(x * cell_size + cell_size, y * cell_size + cell_size);
             rectangle[3] = Vec2(x * cell_size, y * cell_size + cell_size);
-            rectNode->drawPolygon(rectangle, 4, infillColor, borderWidth, borderColor);
+            switch((*pFieldModel)(y, x)) 
+            {
+                case 1:
+                    currentInfillColor = Color4F::MAGENTA;
+                    break;
+                case 2:
+                    currentInfillColor = Color4F::GRAY;
+                    break;
+                case 3:
+                    currentInfillColor = Color4F::GREEN;
+                    break;
+                case 4:
+                    currentInfillColor = Color4F::YELLOW;
+                    break;
+                case 5:
+                    currentInfillColor = Color4F::ORANGE;
+                    break;
+                case 6:
+                    currentInfillColor = Color4F::RED;
+                    break;                
+                default:
+                    currentInfillColor = this->infillColor;
+                    break;
+            }
+            rectNode->drawPolygon(rectangle, 4, currentInfillColor, borderWidth, borderColor);
         }
     }
     this->addChild(rectNode);

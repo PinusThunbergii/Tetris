@@ -30,8 +30,20 @@ bool GameScene::init()
     eventListenerKeyBoard->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressed, this);
     eventListenerKeyBoard->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleased, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListenerKeyBoard, this);
-    
-    fieldModel = new GameFieldModel(10, 22);
+    /*
+    Shape I(4, 4, Color4F::MAGENTA,
+    std::vector<std::vector<int>>{{0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}}, 
+    std::vector<std::vector<int>>{{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}});
+    */
+    L.rotateClockwise();
+    L.rotateClockwise();
+    L.rotateClockwise();
+    std::cout << "===========================" << std::endl;
+    L.rotateCounterClockwise();
+    L.rotateCounterClockwise();
+    L.rotateCounterClockwise();
+
+    fieldModel = new GameFieldModel(10, 20);
     fieldView = GameFieldView::createWithModel(fieldModel);
     fieldView->setModel(fieldModel);
     //fieldView->setPosition(Vec2(center.x, visibleSize.height));
@@ -94,3 +106,4 @@ void GameScene::update(float dt)
     Vec2 boxPosition = box->getPosition();
     //if(boxPosition.x <= 0 || boxPosition.y <= 0)
 }
+

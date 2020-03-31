@@ -3,7 +3,7 @@
 GameFieldModel::GameFieldModel(int width, int height)
 {
     this->width = width;
-    this->height = height;
+    this->height = height + hidden_rows; //add 2 hidden rows
     logic_field.clear();
     logic_field.resize(size_t(height));
     for (size_t i = 0; i < height; i++)
@@ -11,16 +11,28 @@ GameFieldModel::GameFieldModel(int width, int height)
         logic_field.clear();
         logic_field[i].resize(size_t(width));
     }
+    std::default_random_engine generator(3);
+    std::uniform_int_distribution<int> distribution(1,6);
+    
+    for (size_t i = 0; i < this->height-hidden_rows; i++)
+    {
+        for (size_t j = 0; j < this->width; j++)
+        {
+            logic_field[i][j] = distribution(generator);
+            std::cout << logic_field[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 
 int GameFieldModel::getHeight() const
 {
-    return this->height;
+    return this->height-hidden_rows;
 }
 
 void GameFieldModel::setHeight(int height)
 {
-    this->height= height;
+    this->height= height+hidden_rows;
     logic_field.clear();
     logic_field.resize(size_t(height));
     for (size_t i = 0; i < height; i++)
@@ -42,6 +54,16 @@ void GameFieldModel::setWidth(int width)
         logic_field.clear();
         logic_field[i].resize(size_t(width));
     }
+}
+
+int& GameFieldModel::operator()(size_t i, size_t j)
+{
+    return logic_field[i][j]; 
+}
+
+std::vector<std::vector<int>> GameFieldModel::getField() const
+{
+    return logic_field;
 }
 
 GameFieldModel::~GameFieldModel()
