@@ -6,6 +6,8 @@
 
 #include "GameFieldView.h"
 
+class AbstractGameFieldView;
+
 class GameFieldModel
 {
 
@@ -19,13 +21,14 @@ public:
     int& operator()(size_t i, size_t j);
     std::vector<std::vector<int>> getField() const;
     void Update();
-    void AddView();
+    void AddView(AbstractGameFieldView* observer);
+    void NotifyView();
 private:
     int width;
     int height;
     std::vector<std::vector<int>> logic_field;
     const int hidden_rows = 2;
-    void notifyView();
+    std::vector<AbstractGameFieldView*> observers;
 protected:
 
 };

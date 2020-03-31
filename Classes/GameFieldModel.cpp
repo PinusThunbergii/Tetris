@@ -25,6 +25,11 @@ GameFieldModel::GameFieldModel(int width, int height)
     }
 }
 
+GameFieldModel::~GameFieldModel()
+{
+
+}
+
 int GameFieldModel::getHeight() const
 {
     return this->height-hidden_rows;
@@ -66,7 +71,22 @@ std::vector<std::vector<int>> GameFieldModel::getField() const
     return logic_field;
 }
 
-GameFieldModel::~GameFieldModel()
-{
 
+
+void GameFieldModel::Update()
+{
+    NotifyView();
+}
+
+void GameFieldModel::AddView(AbstractGameFieldView* observer)
+{
+    observers.push_back(observer);
+}
+
+void GameFieldModel::NotifyView()
+{
+    for(auto iter = observers.begin(); iter != observers.end(); iter++)
+    {
+        (*iter)->updateView(this);
+    }
 }

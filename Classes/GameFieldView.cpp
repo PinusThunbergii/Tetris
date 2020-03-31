@@ -5,7 +5,7 @@ GameFieldView::GameFieldView():
     borderColor(Color4F::BLUE), infillColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f))
 {
 }
-
+/*
 GameFieldView::GameFieldView(GameFieldModel *pModel): GameFieldView()
 {
     this->setModel(pModel);
@@ -14,7 +14,23 @@ GameFieldView::GameFieldView(GameFieldModel *pModel): GameFieldView()
     Size view_size(float(column_count * cell_size), float(row_count * cell_size));
     this->setContentSize(view_size);
 }
-
+*/
+GameFieldView *GameFieldView::create()
+{
+    GameFieldView *pRet = new (std::nothrow) GameFieldView();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        delete pRet;
+        pRet = nullptr;
+        return nullptr;
+    }
+}
+/*
 GameFieldView *GameFieldView::createWithModel(GameFieldModel *pModel)
 {
     GameFieldView *pRet = new (std::nothrow) GameFieldView(pModel);
@@ -30,6 +46,7 @@ GameFieldView *GameFieldView::createWithModel(GameFieldModel *pModel)
         return nullptr;
     }
 }
+*/
 bool GameFieldView::init()
 {
     //Super init
@@ -37,8 +54,7 @@ bool GameFieldView::init()
     {
         return false;
     }
-
-    drawField();
+    //drawField();
     this->scheduleUpdate();
     return true;
 }
@@ -48,6 +64,7 @@ void GameFieldView::update(float dt)
     std::cout << "GameFieldView::update" << std::endl;
 }
 
+/*
 void GameFieldView::setModel(GameFieldModel *pModel)
 {
     if (pModel != nullptr)
@@ -56,11 +73,12 @@ void GameFieldView::setModel(GameFieldModel *pModel)
     }
     else
     {
-        /* code */
+        
     }
 }
+*/
 
-void GameFieldView::drawField()
+void GameFieldView::drawField(GameFieldModel* pFieldModel)
 {
     int column_count = pFieldModel->getWidth();
     int row_count = pFieldModel->getHeight();
@@ -105,4 +123,14 @@ void GameFieldView::drawField()
         }
     }
     this->addChild(rectNode);
+}
+
+
+void GameFieldView::updateView(GameFieldModel* model)
+{
+    int column_count = model->getWidth();
+    int row_count = model->getHeight();
+    Size view_size(float(column_count * cell_size), float(row_count * cell_size));
+    this->setContentSize(view_size);
+    drawField(model);
 }

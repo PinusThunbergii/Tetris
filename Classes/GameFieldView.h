@@ -1,25 +1,36 @@
 #pragma once
 #include "cocos2d.h"
-#include "GameFieldModel.h"
 #include <iostream>
+
+#include "GameFieldModel.h"
 
 using namespace cocos2d;
 
-class GameFieldView: public Node
+class GameFieldModel;
+
+class AbstractGameFieldView
+{
+public:
+    virtual void updateView(GameFieldModel* model) = 0;
+};
+
+class GameFieldView: public Node, public AbstractGameFieldView
 {
 public:
     virtual bool init();
     //CREATE_FUNC(GameFieldView);
-    static GameFieldView* createWithModel(GameFieldModel* pModel);
+    static GameFieldView* create();
+    //static GameFieldView* createWithModel(GameFieldModel* pModel);
+    void updateView(GameFieldModel* model);
     void update(float dt);
-    void setModel(GameFieldModel* pModel);
+    //void setModel(GameFieldModel* pModel);
 protected:
 
 private:
-    GameFieldModel* pFieldModel;
-    void drawField();
+    //GameFieldModel* pFieldModel;
+    void drawField(GameFieldModel* pFieldModel);
     GameFieldView();
-    GameFieldView(GameFieldModel* pModel);
+    //GameFieldView(GameFieldModel* pModel);
     int cell_size;
     int borderWidth;
     Color4F borderColor;

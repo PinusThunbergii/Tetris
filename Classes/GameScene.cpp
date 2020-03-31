@@ -44,7 +44,7 @@ bool GameScene::init()
     L.rotateCounterClockwise();
     L.rotateCounterClockwise();
     L.rotateCounterClockwise();
-    fieldModel = new GameFieldModel(10, 20);
+    /*fieldModel = new GameFieldModel(10, 20);
     fieldView = GameFieldView::createWithModel(fieldModel);
     fieldView->setModel(fieldModel);
     //fieldView->setPosition(Vec2(center.x, visibleSize.height));
@@ -53,7 +53,16 @@ bool GameScene::init()
     
     Size size = fieldView->getContentSize();
     std::cout << size.width << " " << size.height << std::endl;
+    this->addChild(fieldView);*/
+
+    GameFieldModel fieldModel(10, 20);
+    fieldView = GameFieldView::create();
+    fieldView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    fieldView->setPosition(center);
+    fieldModel.AddView(fieldView);
+    fieldModel.Update();
     this->addChild(fieldView);
+
     this->scheduleUpdate();
     return true;
 }
