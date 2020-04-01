@@ -59,7 +59,8 @@ void GameFieldView::drawField(GameFieldModel* pFieldModel)
             rectangle[1] = Vec2(x * cell_size + cell_size, y * cell_size);
             rectangle[2] = Vec2(x * cell_size + cell_size, y * cell_size + cell_size);
             rectangle[3] = Vec2(x * cell_size, y * cell_size + cell_size);
-            switch((*pFieldModel)(y, x)) 
+            int c = (*pFieldModel)(y, x);
+            switch(c) 
             {
                 case 1:
                     currentInfillColor = Color4F::MAGENTA;
@@ -78,7 +79,10 @@ void GameFieldView::drawField(GameFieldModel* pFieldModel)
                     break;
                 case 6:
                     currentInfillColor = Color4F::RED;
-                    break;                
+                    break;
+                case 7:
+                    currentInfillColor = Color4F::WHITE;
+                    break;                                   
                 default:
                     currentInfillColor = this->infillColor;
                     break;

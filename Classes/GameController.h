@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include <iostream>
+#include <chrono>
 #include "cocos2d.h"
 #include "GameFieldModel.h"
 #include "GameFieldView.h"
@@ -22,5 +23,6 @@ private:
     std::uniform_int_distribution<int> distribution;
     GameFieldModel* model;
     Shape current_figure;
+
 protected:  
 };

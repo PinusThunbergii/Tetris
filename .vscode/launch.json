@@ -19,7 +19,7 @@
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing -exec info registers",
+                    "text": "-enable-pretty-printing ", //-exec info registers
                     "ignoreFailures": true
                 }
             ]

@@ -5,11 +5,44 @@ Shape::Shape()
     
 }
 
-Shape::Shape(int row_count, int column_count, Color4F color, 
+Shape::Shape(int row_count, int column_count, int infill, 
     std::vector<std::vector<int>> mat, std::vector<std::vector<int>> wall_kick_data):
     x_position(0), y_position(0), row_count(row_count), 
-    column_count(column_count), mat(mat), wall_kick_data(wall_kick_data), color(color)
+    column_count(column_count), mat(mat), wall_kick_data(wall_kick_data), infill(infill)
 {
+    for(int i = 0; i < row_count; i++)
+    {
+        for(int j = 0; j < column_count; j++)
+        {
+            if(this->mat[i][j])
+                this->mat[i][j] = infill;
+        }
+    }
+}
+
+Shape& Shape::operator=(const Shape& s)
+{
+    this->mat = s.mat;
+    this->wall_kick_data = s.wall_kick_data;
+    this->x_position = s.x_position;
+    this->y_position = s.y_position;
+    this->rot_position = s.rot_position;
+    this->row_count = s.row_count;
+    this->column_count = s.column_count;
+    this->infill = s.infill;
+    return *this;
+}
+
+Shape::Shape(const Shape& to_copy)
+{
+    this->mat = to_copy.mat;
+    this->wall_kick_data = to_copy.wall_kick_data;
+    this->x_position = to_copy.x_position;
+    this->y_position = to_copy.y_position;
+    this->rot_position = to_copy.rot_position;
+    this->row_count = to_copy.row_count;
+    this->column_count = to_copy.column_count;
+    this->infill = to_copy.infill;
 
 }
 
