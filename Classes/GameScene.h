@@ -3,6 +3,7 @@
 #include "ui/CocosGUI.h"
 #include "GameFieldView.h"
 #include "GameFieldModel.h"
+#include "GameController.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
@@ -14,6 +15,7 @@ public:
     static Scene* createScene();
     void update(float dt);
     CREATE_FUNC(GameScene);
+    ~GameScene();
 private:
     Button* backButton;
     Sprite* box;
@@ -22,4 +24,5 @@ private:
     void keyReleased(EventKeyboard::KeyCode keyCode, Event* event);
     GameFieldView* fieldView;
     GameFieldModel* fieldModel;
+    GameController* controller;
 };

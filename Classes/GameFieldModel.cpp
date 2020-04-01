@@ -11,6 +11,7 @@ GameFieldModel::GameFieldModel(int width, int height)
         logic_field.clear();
         logic_field[i].resize(size_t(width));
     }
+#ifdef RAND_INFILL_TEST
     std::default_random_engine generator(3);
     std::uniform_int_distribution<int> distribution(1,6);
     
@@ -23,6 +24,8 @@ GameFieldModel::GameFieldModel(int width, int height)
         }
         std::cout << std::endl;
     }
+#endif // DEBUG    
+    
 }
 
 GameFieldModel::~GameFieldModel()
@@ -71,8 +74,6 @@ std::vector<std::vector<int>> GameFieldModel::getField() const
     return logic_field;
 }
 
-
-
 void GameFieldModel::Update()
 {
     NotifyView();
@@ -87,6 +88,7 @@ void GameFieldModel::NotifyView()
 {
     for(auto iter = observers.begin(); iter != observers.end(); iter++)
     {
-        (*iter)->updateView(this);
+        if((*iter) != nullptr)
+            (*iter)->updateView(this);
     }
 }

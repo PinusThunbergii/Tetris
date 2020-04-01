@@ -2,6 +2,14 @@
 #include "StartScene.h"
 #include "Shape.h"
 
+GameScene::~GameScene()
+{
+    if(fieldModel != nullptr)
+        delete fieldModel;
+    if(controller != nullptr)
+        delete controller;    
+}
+
 bool GameScene::init()
 {
     if (!Scene::init())
@@ -54,13 +62,14 @@ bool GameScene::init()
     Size size = fieldView->getContentSize();
     std::cout << size.width << " " << size.height << std::endl;
     this->addChild(fieldView);*/
-
-    GameFieldModel fieldModel(10, 20);
+    controller = new GameController();
+    fieldModel = new GameFieldModel(10, 20);
     fieldView = GameFieldView::create();
     fieldView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     fieldView->setPosition(center);
-    fieldModel.AddView(fieldView);
-    fieldModel.Update();
+    fieldModel->AddView(fieldView);
+    fieldModel->Update();
+    controller->ConnectModel(fieldModel);
     this->addChild(fieldView);
 
     this->scheduleUpdate();
@@ -79,6 +88,7 @@ void GameScene::onClick_backButton(Ref *sender)
 
 void GameScene::keyPressed(EventKeyboard::KeyCode keyCode, Event *event)
 {
+    /*
     std::cout << (int)keyCode << std::endl;
     Vec2 dir;
     float deltaMove = 50;
@@ -103,6 +113,8 @@ void GameScene::keyPressed(EventKeyboard::KeyCode keyCode, Event *event)
     }
     auto mvb = MoveBy::create(0.5, dir);
     box->runAction(mvb);
+    */
+   controller->ProcessKeyPress(keyCode);
 }
 
 void GameScene::keyReleased(EventKeyboard::KeyCode keyCode, Event *event)
@@ -115,5 +127,6 @@ void GameScene::update(float dt)
     /*std::cout << "Update interval: " << dt << std::endl;
     Vec2 boxPosition = box->getPosition();*/
     //if(boxPosition.x <= 0 || boxPosition.y <= 0)
+    controller->Update();
 }
 

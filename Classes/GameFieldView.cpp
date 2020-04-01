@@ -1,20 +1,11 @@
 #include "GameFieldView.h"
 
 GameFieldView::GameFieldView(): 
-    cell_size(20), borderWidth(1), 
+    cell_size(20), borderWidth(2), 
     borderColor(Color4F::BLUE), infillColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f))
 {
 }
-/*
-GameFieldView::GameFieldView(GameFieldModel *pModel): GameFieldView()
-{
-    this->setModel(pModel);
-    int column_count = pFieldModel->getWidth();
-    int row_count = pFieldModel->getHeight();
-    Size view_size(float(column_count * cell_size), float(row_count * cell_size));
-    this->setContentSize(view_size);
-}
-*/
+
 GameFieldView *GameFieldView::create()
 {
     GameFieldView *pRet = new (std::nothrow) GameFieldView();
@@ -30,23 +21,7 @@ GameFieldView *GameFieldView::create()
         return nullptr;
     }
 }
-/*
-GameFieldView *GameFieldView::createWithModel(GameFieldModel *pModel)
-{
-    GameFieldView *pRet = new (std::nothrow) GameFieldView(pModel);
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    else
-    {
-        delete pRet;
-        pRet = nullptr;
-        return nullptr;
-    }
-}
-*/
+
 bool GameFieldView::init()
 {
     //Super init
@@ -54,7 +29,9 @@ bool GameFieldView::init()
     {
         return false;
     }
+    rectNode = DrawNode::create();
     //drawField();
+    this->addChild(rectNode);
     this->scheduleUpdate();
     return true;
 }
@@ -64,26 +41,13 @@ void GameFieldView::update(float dt)
     std::cout << "GameFieldView::update" << std::endl;
 }
 
-/*
-void GameFieldView::setModel(GameFieldModel *pModel)
-{
-    if (pModel != nullptr)
-    {
-        this->pFieldModel = pModel;
-    }
-    else
-    {
-        
-    }
-}
-*/
-
 void GameFieldView::drawField(GameFieldModel* pFieldModel)
 {
     int column_count = pFieldModel->getWidth();
     int row_count = pFieldModel->getHeight();
 
-    auto rectNode = DrawNode::create();
+    //auto rectNode = DrawNode::create();
+    rectNode->clear();
     Color4F currentInfillColor;
 
     for (int y = 0; y < row_count; y++)
@@ -122,9 +86,8 @@ void GameFieldView::drawField(GameFieldModel* pFieldModel)
             rectNode->drawPolygon(rectangle, 4, currentInfillColor, borderWidth, borderColor);
         }
     }
-    this->addChild(rectNode);
+   //this->addChild(rectNode);
 }
-
 
 void GameFieldView::updateView(GameFieldModel* model)
 {

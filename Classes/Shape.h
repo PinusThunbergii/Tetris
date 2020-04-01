@@ -9,6 +9,7 @@ using namespace cocos2d;
 class Shape
 {
 public:
+    Shape();
     Shape(int row_count, int column_count, Color4F color, 
         std::vector<std::vector<int>> mat, std::vector<std::vector<int>> wall_kick_data);
     void rotateClockwise(); //+>
@@ -20,6 +21,8 @@ public:
     void setPositionY(int y_position);
     int getPositionX() const;
     int getPositionY() const;
+    int getWidth() const;
+    int getHeight() const;
 private:
     int row_count;
     int column_count;

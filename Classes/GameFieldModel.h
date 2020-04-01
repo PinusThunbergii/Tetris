@@ -6,6 +6,8 @@
 
 #include "GameFieldView.h"
 
+//#define RAND_INFILL_TEST
+
 class AbstractGameFieldView;
 
 class GameFieldModel

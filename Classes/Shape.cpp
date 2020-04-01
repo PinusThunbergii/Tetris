@@ -1,5 +1,10 @@
 #include "Shape.h"
 
+Shape::Shape()
+{
+    
+}
+
 Shape::Shape(int row_count, int column_count, Color4F color, 
     std::vector<std::vector<int>> mat, std::vector<std::vector<int>> wall_kick_data):
     x_position(0), y_position(0), row_count(row_count), 
@@ -115,4 +120,14 @@ int Shape::getPositionX() const
 int Shape::getPositionY() const
 {
     return y_position;
+}
+
+int Shape::getWidth() const
+{
+    return column_count;
+}
+
+int Shape::getHeight() const
+{
+    return row_count;
 }
