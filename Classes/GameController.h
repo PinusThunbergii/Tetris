@@ -23,6 +23,7 @@ private:
     std::uniform_int_distribution<int> distribution;
     GameFieldModel* model;
     Shape current_figure;
-
+    std::chrono::time_point<std::chrono::system_clock> lastTime;
+    float updateInterval;
 protected:  
 };

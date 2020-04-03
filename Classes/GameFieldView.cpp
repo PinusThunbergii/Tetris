@@ -38,7 +38,7 @@ bool GameFieldView::init()
 
 void GameFieldView::update(float dt)
 {
-    std::cout << "GameFieldView::update" << std::endl;
+    //5std::cout << "GameFieldView::update" << std::endl;
 }
 
 void GameFieldView::drawField(GameFieldModel* pFieldModel)

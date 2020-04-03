@@ -28,12 +28,13 @@ bool GameScene::init()
     backButton->addClickEventListener(CC_CALLBACK_0(onClick_backButton, this));
     this->addChild(backButton, -1);
 
+/*
     box = Sprite::create("sprites/box.png");
     box->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     box->setPosition(center);
     box->setScale(0.2);
     this->addChild(box, -1);
-
+*/
     auto eventListenerKeyBoard = EventListenerKeyboard::create();
     eventListenerKeyBoard->onKeyPressed = CC_CALLBACK_2(GameScene::keyPressed, this);
     eventListenerKeyBoard->onKeyReleased = CC_CALLBACK_2(GameScene::keyReleased, this);

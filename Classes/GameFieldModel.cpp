@@ -66,6 +66,7 @@ void GameFieldModel::setWidth(int width)
 
 int& GameFieldModel::operator()(size_t i, size_t j)
 {
+    //if(i >= 0 && i < width && j >= 0 && j < height)
     return logic_field[i][j]; 
 }
 

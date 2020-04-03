@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace cocos2d;
 
-#define SHAPE_DEBUG
+//#define SHAPE_DEBUG
 
 class Shape
 {

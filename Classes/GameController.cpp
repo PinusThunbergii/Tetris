@@ -1,8 +1,7 @@
 #include "GameController.h"
 
-GameController::GameController(): generator(), distribution(1, 7), model(nullptr)
+GameController::GameController() : generator(), distribution(1, 7), model(nullptr), updateInterval(0.8f)
 {
-    
 }
 
 Shape GameController::spawn()
@@ -30,20 +29,19 @@ Shape GameController::spawn()
     case 5:
         s = S;
         return s;
-        break;   
+        break;
     case 6:
         s = T;
         return s;
-        break; 
+        break;
     case 7:
         s = Z;
         return s;
-        break;             
+        break;
     default:
         std::cout << "Yellow submarine/////" << std::endl;
         break;
     }
-    
 }
 
 void GameController::ProcessKeyPress(EventKeyboard::KeyCode keyCode)
@@ -52,13 +50,13 @@ void GameController::ProcessKeyPress(EventKeyboard::KeyCode keyCode)
     {
 
     case EventKeyboard::KeyCode::KEY_W:
-        
+
         break;
     case EventKeyboard::KeyCode::KEY_A:
-        
+
         break;
     case EventKeyboard::KeyCode::KEY_S:
-        
+
         break;
     case EventKeyboard::KeyCode::KEY_D:
 
@@ -69,31 +67,38 @@ void GameController::ProcessKeyPress(EventKeyboard::KeyCode keyCode)
     }
 }
 
-void GameController::ConnectModel(GameFieldModel* model)
+void GameController::ConnectModel(GameFieldModel *model)
 {
     this->model = model;
 }
-
 
 void GameController::Update()
 {
     current_figure = spawn();
     current_figure.setPositionX(5);
-    current_figure.setPositionY(10);
+    current_figure.setPositionY(5);
 
     int row_count = current_figure.getHeight();
     int column_count = current_figure.getWidth();
     auto mat = current_figure.getMatrix();
 
-    for(int x = 0; x < row_count; x++)
+    auto now = std::chrono::system_clock::now();
+    float delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTime).count() / 1000.f;
+    if (delta >= updateInterval)
     {
-        for(int y = 0; y < column_count; y++)
+        std::cout << "Update time " << delta << std::endl;
+        lastTime = now;
+        for (int x = 0; x < row_count; x++)
         {
-            int k = mat[x][y];
-            std::cout << k << std::endl;
-            (*model)(x, y) = k;
-            //(*model)(x, y) = mat[x][y];
+            for (int y = 0; y < column_count; y++)
+            {
+                int k = mat[x][y];
+                //std::cout << k << std::endl;
+                (*model)(x, y ) = k;
+                //(*model)(x, y) = mat[x][y];
+            }
         }
+        model->Update();
     }
-    model->Update();
+    
 }
