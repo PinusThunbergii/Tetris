@@ -11,6 +11,7 @@ class GameController
 {
 public:
     GameController();
+    ~GameController();
     void Update();
     void Stop();
     void ProcessKeyPress(EventKeyboard::KeyCode keyCode);
@@ -18,12 +19,15 @@ public:
     int GetScore();
     void ConnectModel(GameFieldModel* model);
 private:
-    Shape spawn();
+    Shape* spawn();
     std::default_random_engine generator;
     std::uniform_int_distribution<int> distribution;
     GameFieldModel* model;
-    Shape current_figure;
+    Shape* current_figure;
     std::chrono::time_point<std::chrono::system_clock> lastTime;
     float updateInterval;
+    bool can_spawn_down(Shape* figure);
+    void drawShape(Shape* shape);
+    void clearShape(Shape* shape);
 protected:  
 };

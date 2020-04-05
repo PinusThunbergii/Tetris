@@ -20,6 +20,7 @@ public:
     void setHeight(int height);
     int getWidth() const;
     void setWidth(int width);
+    int getHiddenRowsCount();
     int& operator()(size_t i, size_t j);
     std::vector<std::vector<int>> getField() const;
     void Update();
@@ -29,7 +30,7 @@ private:
     int width;
     int height;
     std::vector<std::vector<int>> logic_field;
-    const int hidden_rows = 2;
+    const int hidden_rows = 20;
     std::vector<AbstractGameFieldView*> observers;
 protected:
 

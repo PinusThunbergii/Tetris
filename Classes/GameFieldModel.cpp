@@ -3,13 +3,13 @@
 GameFieldModel::GameFieldModel(int width, int height)
 {
     this->width = width;
-    this->height = height + hidden_rows; //add 2 hidden rows
+    this->height = height + hidden_rows; //add hidden rows
     logic_field.clear();
-    logic_field.resize(size_t(height));
-    for (size_t i = 0; i < height; i++)
+    logic_field.resize(size_t(this->height));
+    for (size_t i = 0; i < this->height; i++)
     {
-        logic_field.clear();
-        logic_field[i].resize(size_t(width));
+        //logic_field.clear();
+        logic_field[i].resize(size_t(this->width));
     }
 #ifdef RAND_INFILL_TEST
     std::default_random_engine generator(3);
@@ -42,7 +42,7 @@ void GameFieldModel::setHeight(int height)
 {
     this->height= height+hidden_rows;
     logic_field.clear();
-    logic_field.resize(size_t(height));
+    logic_field.resize(size_t(this->height));
     for (size_t i = 0; i < height; i++)
     {
         logic_field.clear();
@@ -64,6 +64,11 @@ void GameFieldModel::setWidth(int width)
     }
 }
 
+
+int GameFieldModel::getHiddenRowsCount() 
+{
+    return hidden_rows;
+}
 int& GameFieldModel::operator()(size_t i, size_t j)
 {
     //if(i >= 0 && i < width && j >= 0 && j < height)
