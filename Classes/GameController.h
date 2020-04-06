@@ -21,7 +21,7 @@ public:
     void ConnectModel(GameFieldModel* model);
 private:
     
-    std::default_random_engine generator;
+    std::mt19937 generator;
     std::uniform_int_distribution<int> distribution;
     std::queue<EventKeyboard::KeyCode> input_queue;
     std::chrono::time_point<std::chrono::system_clock> lastTime;
@@ -30,11 +30,15 @@ private:
     float updateInterval;
     int score;
     Shape* spawn();
-    bool can_spawn_down(Shape* figure);
     void drawShape(Shape* shape);
     void clearShape(Shape* shape);
     bool hasCollisionWithFlieldBoard(Shape* shape);
     bool cantMoveDown(Shape* shape);
     void destroyFilledLines();
+    void moveLeft();
+    void moveRight();
+    void moveDown();
+    void rotateClockwise();
+    void rotateCounterClockwise();
 protected:  
 };
