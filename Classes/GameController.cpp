@@ -108,82 +108,71 @@ void GameController::ConnectModel(GameFieldModel *model)
 
 void GameController::Update()
 {
-    if (current_figure != nullptr)
-    {
-    }
-    else
+    if (current_figure == nullptr)
     {
         current_figure = spawn();
         current_figure->setPositionX(model->getWidth() / 2);
-        current_figure->setPositionY(model->getHeight() / 2);
+        current_figure->setPositionY(model->getHeight());
     }
-
+    Shape *tmp;
     auto now = std::chrono::system_clock::now();
     float delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTime).count() / 1000.f;
+    clearShape(current_figure);
     if (delta >= updateInterval)
     {
         std::cout << "Update time " << delta << std::endl;
         lastTime = now;
-        static int t = 0;
-        //drawShape(current_figure);
-        /*
-        if(t < 22)
+        tmp = new Shape(*current_figure);
+        tmp->setPositionY(tmp->getPositionY() - 1);
+        if(cantMoveDown(tmp))
         {
-            clearShape(current_figure);
-            current_figure->setPositionY(current_figure->getPositionY() - 1);
-            current_figure->rotateClockwise();
             drawShape(current_figure);
-            t++;
+            delete current_figure;
+            current_figure = spawn();
+            current_figure->setPositionX(model->getWidth() / 2);
+            current_figure->setPositionY(model->getHeight());
+            if(cantMoveDown(current_figure))
+                std::cout << "game over" << std::endl;
+           std::cout << "can`t move down" << std::endl;
         }
-        */
-
-        /*
-        clearShape(current_figure);
-        while(!input_queue.empty())
+        else if (!hasCollisionWithFlieldBoard(tmp))
         {
-            EventKeyboard::KeyCode keyCode;
-            keyCode = input_queue.back();
-            input_queue.pop();
-            switch (keyCode)
-            {
 
-                case EventKeyboard::KeyCode::KEY_W:
-                    current_figure->rotateClockwise();
-                    break;
-                case EventKeyboard::KeyCode::KEY_A:
-
-                    break;
-                case EventKeyboard::KeyCode::KEY_S:
-                    current_figure->rotateCounterClockwise();
-                    break;
-                case EventKeyboard::KeyCode::KEY_D:
-
-                    break;
-                default:
-                    return;
-                    //break;
-            }
+            delete current_figure;
+            current_figure = tmp;
         }
-        drawShape(current_figure);
-
-        model->Update();
+        else
+        {
+            delete tmp;
+        }
+        /*
+        if(cantMoveDown(tmp))
+        {
+            
+            delete current_figure;
+            current_figure = spawn();
+            current_figure->setPositionX(model->getWidth() / 2);
+            current_figure->setPositionY(model->getHeight() / 2);
+            
+           std::cout << "can`t move down" << std::endl;
+        }
         */
     }
 
-    clearShape(current_figure);
+    
     while (!input_queue.empty())
     {
         EventKeyboard::KeyCode keyCode;
         keyCode = input_queue.back();
         input_queue.pop();
-        Shape* tmp;
+
         switch (keyCode)
         {
 
         case EventKeyboard::KeyCode::KEY_W:
             tmp = new Shape(*current_figure);
             tmp->rotateClockwise();
-            if(!hasCollisionWithFlieldBoard(tmp))
+            if (!hasCollisionWithFlieldBoard(tmp))
             {
                 delete current_figure;
                 current_figure = tmp;
@@ -192,13 +181,13 @@ void GameController::Update()
             {
                 delete tmp;
             }
-            
+
             //current_figure->rotateClockwise();
             break;
         case EventKeyboard::KeyCode::KEY_A:
             tmp = new Shape(*current_figure);
             tmp->setPositionX(tmp->getPositionX() - 1);
-            if(!hasCollisionWithFlieldBoard(tmp))
+            if (!hasCollisionWithFlieldBoard(tmp))
             {
                 delete current_figure;
                 current_figure = tmp;
@@ -212,7 +201,7 @@ void GameController::Update()
         case EventKeyboard::KeyCode::KEY_S:
             tmp = new Shape(*current_figure);
             tmp->rotateCounterClockwise();
-            if(!hasCollisionWithFlieldBoard(tmp))
+            if (!hasCollisionWithFlieldBoard(tmp))
             {
                 delete current_figure;
                 current_figure = tmp;
@@ -226,7 +215,7 @@ void GameController::Update()
         case EventKeyboard::KeyCode::KEY_D:
             tmp = new Shape(*current_figure);
             tmp->setPositionX(tmp->getPositionX() + 1);
-            if(!hasCollisionWithFlieldBoard(tmp))
+            if (!hasCollisionWithFlieldBoard(tmp))
             {
                 delete current_figure;
                 current_figure = tmp;
@@ -240,7 +229,7 @@ void GameController::Update()
         case EventKeyboard::KeyCode::KEY_SPACE:
             tmp = new Shape(*current_figure);
             tmp->setPositionY(tmp->getPositionY() - 1);
-            if(!hasCollisionWithFlieldBoard(tmp))
+            if (!hasCollisionWithFlieldBoard(tmp))
             {
                 delete current_figure;
                 current_figure = tmp;
@@ -273,9 +262,35 @@ bool GameController::hasCollisionWithFlieldBoard(Shape *shape)
             {
                 int x_i = shift_x + x;
                 int y_i = shift_y + y;
-                if (x_i < 0 || x_i > model->getWidth() - 1 || y_i < 0 || y_i > model->getHeight() - 1)
+                if (x_i < 0 || x_i > model->getWidth() - 1 || y_i < 0 || y_i > model->getHeight() + 2)
                     return true;
                 //(*model)(y_i, x_i) = shape->getMatrix()[y][x];
+            }
+        }
+    }
+    return false;
+}
+
+bool GameController::cantMoveDown(Shape *shape)
+{
+    int shift_x = shape->getPositionX() - shape->getWidth() / 2;
+    int shift_y = shape->getPositionY() - shape->getHeight() / 2;
+    for (int y = 0; y < shape->getHeight(); y++)
+    {
+        for (int x = 0; x < shape->getWidth(); x++)
+        {
+            if (shape->getMatrix()[y][x] > 0)
+            {
+                int x_i = shift_x + x;
+                int y_i = shift_y + y;
+                if (x_i < 0 || x_i > model->getWidth() - 1 || y_i < 0 || y_i > model->getHeight() + 2)
+                {
+                    return true;
+                }
+                else if ((*model)(y_i, x_i) > 0)
+                {
+                    return true;
+                }
             }
         }
     }

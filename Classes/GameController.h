@@ -34,6 +34,6 @@ private:
     void drawShape(Shape* shape);
     void clearShape(Shape* shape);
     bool hasCollisionWithFlieldBoard(Shape* shape);
-    bool canMoveDown(Shape* shape);
+    bool cantMoveDown(Shape* shape);
 protected:  
 };

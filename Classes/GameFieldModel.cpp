@@ -15,7 +15,7 @@ GameFieldModel::GameFieldModel(int width, int height)
     std::default_random_engine generator(3);
     std::uniform_int_distribution<int> distribution(1,6);
     
-    for (size_t i = 0; i < this->height-hidden_rows; i++)
+    for (size_t i = 0; i < this->height-hidden_rows - 10; i++)
     {
         for (size_t j = 0; j < this->width; j++)
         {
