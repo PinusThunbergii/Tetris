@@ -28,12 +28,13 @@ private:
     GameFieldModel* model;
     Shape* current_figure;
     float updateInterval;
-
+    int score;
     Shape* spawn();
     bool can_spawn_down(Shape* figure);
     void drawShape(Shape* shape);
     void clearShape(Shape* shape);
     bool hasCollisionWithFlieldBoard(Shape* shape);
     bool cantMoveDown(Shape* shape);
+    void destroyFilledLines();
 protected:  
 };

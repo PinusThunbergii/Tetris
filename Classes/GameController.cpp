@@ -1,6 +1,7 @@
 #include "GameController.h"
 
-GameController::GameController() : generator(), distribution(1, 7), model(nullptr), updateInterval(0.1f), current_figure(nullptr)
+GameController::GameController() : generator(), distribution(1, 7), model(nullptr), 
+    updateInterval(0.1f), current_figure(nullptr), score(0)
 {
     //current_figure = spawn();
 }
@@ -295,4 +296,15 @@ bool GameController::cantMoveDown(Shape *shape)
         }
     }
     return false;
+}
+
+void GameController::destroyFilledLines()
+{
+    for(int y = 0; y < model->getHeight(); y++)
+    {
+        for(int x = 0; x < model->getWidth(); x++)
+        {
+            
+        }
+    }
 }
