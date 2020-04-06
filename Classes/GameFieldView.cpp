@@ -2,7 +2,7 @@
 
 GameFieldView::GameFieldView(): 
     cell_size(20), borderWidth(2), 
-    borderColor(Color4F::BLUE), infillColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f))
+    borderColor(Color4F::GRAY), infillColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f))
 {
 }
 
@@ -63,25 +63,25 @@ void GameFieldView::drawField(GameFieldModel* pFieldModel)
             switch(c) 
             {
                 case 1:
-                    currentInfillColor = Color4F::MAGENTA;
+                    currentInfillColor = Color4F(0.0f, 1.0f, 1.0f, 1.0f);
                     break;
                 case 2:
-                    currentInfillColor = Color4F::GRAY;
+                    currentInfillColor = Color4F::ORANGE;
                     break;
                 case 3:
-                    currentInfillColor = Color4F::GREEN;
+                    currentInfillColor = Color4F::BLUE;
                     break;
                 case 4:
                     currentInfillColor = Color4F::YELLOW;
                     break;
                 case 5:
-                    currentInfillColor = Color4F::ORANGE;
+                    currentInfillColor = Color4F::GREEN;
                     break;
                 case 6:
                     currentInfillColor = Color4F::RED;
                     break;
                 case 7:
-                    currentInfillColor = Color4F::WHITE;
+                    currentInfillColor = Color4F::MAGENTA;
                     break;                                   
                 default:
                     currentInfillColor = this->infillColor;

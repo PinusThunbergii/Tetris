@@ -2,6 +2,7 @@
 #include <random>
 #include <iostream>
 #include <chrono>
+#include <queue>
 #include "cocos2d.h"
 #include "GameFieldModel.h"
 #include "GameFieldView.h"
@@ -19,15 +20,20 @@ public:
     int GetScore();
     void ConnectModel(GameFieldModel* model);
 private:
-    Shape* spawn();
+    
     std::default_random_engine generator;
     std::uniform_int_distribution<int> distribution;
+    std::queue<EventKeyboard::KeyCode> input_queue;
+    std::chrono::time_point<std::chrono::system_clock> lastTime;
     GameFieldModel* model;
     Shape* current_figure;
-    std::chrono::time_point<std::chrono::system_clock> lastTime;
     float updateInterval;
+
+    Shape* spawn();
     bool can_spawn_down(Shape* figure);
     void drawShape(Shape* shape);
     void clearShape(Shape* shape);
+    bool hasCollisionWithFlieldBoard(Shape* shape);
+    bool canMoveDown(Shape* shape);
 protected:  
 };
