@@ -32,7 +32,8 @@ private:
     Shape* spawn();
     void drawShape(Shape* shape);
     void clearShape(Shape* shape);
-    bool hasCollisionWithFlieldBoard(Shape* shape);
+    bool hasCollisionWithFieldBoard(Shape* shape);
+    bool intersectWithFigures(Shape* shape);
     bool cantMoveDown(Shape* shape);
     void destroyFilledLines();
     void moveLeft();

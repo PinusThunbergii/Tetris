@@ -1,7 +1,7 @@
 #include "GameController.h"
 
 GameController::GameController() : distribution(1, 7), model(nullptr),
-                                   updateInterval(0.25f), current_figure(nullptr), score(0),
+                                   updateInterval(0.1f), current_figure(nullptr), score(0),
                                    generator(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count())
 {
     //current_figure = spawn();
@@ -44,7 +44,7 @@ Shape *GameController::spawn()
         break;
     }
     s->setPositionX(model->getWidth() / 2);
-    s->setPositionY(model->getHeight());
+    s->setPositionY(model->getHeight()+2);
     return s;
 }
 
@@ -101,7 +101,6 @@ void GameController::Update()
     {
         current_figure = spawn();
     }
-
     clearShape(current_figure);
     auto now = std::chrono::system_clock::now();
     float delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTime).count() / 1000.f;
@@ -143,6 +142,7 @@ void GameController::Update()
 
     if (cantMoveDown(current_figure))
     {
+        drawShape(current_figure);
         delete current_figure;
         current_figure = spawn();
     }
@@ -151,7 +151,27 @@ void GameController::Update()
     model->Update();
 }
 
-bool GameController::hasCollisionWithFlieldBoard(Shape *shape)
+bool GameController::hasCollisionWithFieldBoard(Shape *shape)
+{
+    int shift_x = shape->getPositionX() - shape->getWidth() / 2;
+    int shift_y = shape->getPositionY() - shape->getHeight() / 2;
+    for (int y = 0; y < shape->getHeight(); y++)
+    {
+        for (int x = 0; x < shape->getWidth(); x++)
+        {
+            if (shape->getMatrix()[y][x] > 0)
+            {
+                int x_i = shift_x + x;
+                int y_i = shift_y + y;
+                if (x_i < 0 || x_i > model->getWidth() - 1 || y_i < 0 || y_i > model->getHeight() + 2 )
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool GameController::intersectWithFigures(Shape* shape)
 {
     int shift_x = shape->getPositionX() - shape->getWidth() / 2;
     int shift_y = shape->getPositionY() - shape->getHeight() / 2;
@@ -164,6 +184,8 @@ bool GameController::hasCollisionWithFlieldBoard(Shape *shape)
                 int x_i = shift_x + x;
                 int y_i = shift_y + y;
                 if (x_i < 0 || x_i > model->getWidth() - 1 || y_i < 0 || y_i > model->getHeight() + 2)
+                    return true;
+                if((*model)(y_i, x_i) > 0 )
                     return true;
             }
         }
@@ -214,7 +236,7 @@ void GameController::moveLeft()
     Shape *tmp;
     tmp = new Shape(*current_figure);
     tmp->setPositionX(tmp->getPositionX() - 1);
-    if (!hasCollisionWithFlieldBoard(tmp))
+    if (!hasCollisionWithFieldBoard(tmp) && !intersectWithFigures(tmp))
     {
         delete current_figure;
         current_figure = tmp;
@@ -230,7 +252,7 @@ void GameController::moveRight()
     Shape *tmp;
     tmp = new Shape(*current_figure);
     tmp->setPositionX(tmp->getPositionX() + 1);
-    if (!hasCollisionWithFlieldBoard(tmp))
+    if (!hasCollisionWithFieldBoard(tmp) && !intersectWithFigures(tmp))
     {
         delete current_figure;
         current_figure = tmp;
@@ -246,7 +268,7 @@ void GameController::moveDown()
     Shape *tmp;
     tmp = new Shape(*current_figure);
     tmp->setPositionY(tmp->getPositionY() - 1);
-    if (!hasCollisionWithFlieldBoard(tmp))
+    if (!hasCollisionWithFieldBoard(tmp) && !intersectWithFigures(tmp))
     {
         delete current_figure;
         current_figure = tmp;
@@ -262,7 +284,7 @@ void GameController::rotateClockwise()
     Shape *tmp;
     tmp = new Shape(*current_figure);
     tmp->rotateClockwise();
-    if (!hasCollisionWithFlieldBoard(tmp))
+    if (!hasCollisionWithFieldBoard(tmp) && !intersectWithFigures(tmp))
     {
         delete current_figure;
         current_figure = tmp;
@@ -278,7 +300,7 @@ void GameController::rotateCounterClockwise()
     Shape *tmp;
     tmp = new Shape(*current_figure);
     tmp->rotateCounterClockwise();
-    if (!hasCollisionWithFlieldBoard(tmp))
+    if (!hasCollisionWithFieldBoard(tmp) && !intersectWithFigures(tmp))
     {
         delete current_figure;
         current_figure = tmp;
