@@ -44,6 +44,7 @@ bool GameScene::init()
     this->addChild(fieldView);
 
     this->scheduleUpdate();
+    controller->Start();
     return true;
 }
 
@@ -60,6 +61,18 @@ void GameScene::onClick_backButton(Ref *sender)
 void GameScene::keyPressed(EventKeyboard::KeyCode keyCode, Event *event)
 {
    controller->ProcessKeyPress(keyCode);
+   if(keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
+   {
+        if(controller->GetGameState() == GameState::PAUSE)  
+        {
+            controller->Start();
+        } 
+        else if(controller->GetGameState() == GameState::PLAY)
+        {
+            controller->Pause(); 
+        }    
+   }
+
 }
 
 void GameScene::keyReleased(EventKeyboard::KeyCode keyCode, Event *event)
@@ -70,5 +83,9 @@ void GameScene::keyReleased(EventKeyboard::KeyCode keyCode, Event *event)
 void GameScene::update(float dt)
 {
     controller->Update();
+    if(controller->GetGameState() == GameState::GAMEOVER)  
+    {
+        std::cout << "Gameover" << std::endl;
+    } 
 }
 

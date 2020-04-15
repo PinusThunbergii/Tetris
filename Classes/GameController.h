@@ -8,6 +8,13 @@
 #include "GameFieldView.h"
 #include "Shape.h"
 
+enum GameState{
+    PAUSE,
+    PLAY,
+    STOP,
+    GAMEOVER
+};
+
 class GameController
 {
 public:
@@ -15,6 +22,9 @@ public:
     ~GameController();
     void Update();
     void Stop();
+    void Start();
+    void Pause();
+    GameState GetGameState();
     void ProcessKeyPress(EventKeyboard::KeyCode keyCode);
     void Reset();
     int GetScore();
@@ -35,11 +45,13 @@ private:
     bool hasCollisionWithFieldBoard(Shape* shape);
     bool intersectWithFigures(Shape* shape);
     bool cantMoveDown(Shape* shape);
+    bool cantMoveDownFirstSpawn(Shape* shape);
     void destroyFilledLines();
     void moveLeft();
     void moveRight();
     void moveDown();
     void rotateClockwise();
     void rotateCounterClockwise();
+    GameState state;
 protected:  
 };

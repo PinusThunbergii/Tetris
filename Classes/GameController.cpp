@@ -1,7 +1,7 @@
 #include "GameController.h"
 
 GameController::GameController() : distribution(1, 7), model(nullptr),
-                                   updateInterval(0.25f), current_figure(nullptr), score(0),
+                                   updateInterval(0.15f), current_figure(nullptr), score(0), state(GameState::PAUSE),
                                    generator(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count())
 {
     //current_figure = spawn();
@@ -96,59 +96,72 @@ void GameController::ConnectModel(GameFieldModel *model)
 
 void GameController::Update()
 {
-
-    if (current_figure == nullptr)
+    if(state == GameState::PLAY)
     {
-        current_figure = spawn();
-    }
-    clearShape(current_figure);
-    auto now = std::chrono::system_clock::now();
-    float delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTime).count() / 1000.f;
-
-    if (delta >= updateInterval)
-    {
-        lastTime = now;
-        moveDown();
-    }
-
-    while (!input_queue.empty())
-    {
-        EventKeyboard::KeyCode keyCode;
-        keyCode = input_queue.back();
-        input_queue.pop();
-
-        switch (keyCode)
+        if (current_figure == nullptr)
         {
-
-        case EventKeyboard::KeyCode::KEY_W:
-            rotateClockwise();
-            break;
-        case EventKeyboard::KeyCode::KEY_A:
-            moveLeft();
-            break;
-        case EventKeyboard::KeyCode::KEY_S:
-            rotateCounterClockwise();
-            break;
-        case EventKeyboard::KeyCode::KEY_D:
-            moveRight();
-            break;
-        case EventKeyboard::KeyCode::KEY_SPACE:
-            moveDown();
-            break;
-        default:
-            break;
+            current_figure = spawn();
+            if(cantMoveDownFirstSpawn(current_figure))
+            {
+                state = GameState::GAMEOVER; 
+            }
         }
-    }
+        
 
-    if (cantMoveDown(current_figure))
-    {
+        clearShape(current_figure);
+        auto now = std::chrono::system_clock::now();
+        float delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastTime).count() / 1000.f;
+
+        if (delta >= updateInterval)
+        {
+            lastTime = now;
+            /*if (cantMoveDown(current_figure))
+            {
+                state = GameState::GAMEOVER; 
+            }*/
+            moveDown();
+            
+        }
+
+        while (!input_queue.empty())
+        {
+            EventKeyboard::KeyCode keyCode;
+            keyCode = input_queue.back();
+            input_queue.pop();
+
+            switch (keyCode)
+            {
+
+            case EventKeyboard::KeyCode::KEY_W:
+                rotateClockwise();
+                break;
+            case EventKeyboard::KeyCode::KEY_A:
+                moveLeft();
+                break;
+            case EventKeyboard::KeyCode::KEY_S:
+                rotateCounterClockwise();
+                break;
+            case EventKeyboard::KeyCode::KEY_D:
+                moveRight();
+                break;
+            case EventKeyboard::KeyCode::KEY_SPACE:
+                moveDown();
+                break;
+            default:
+                break;
+            }
+        }
+
+        if (cantMoveDown(current_figure))
+        {
+            drawShape(current_figure);
+            delete current_figure;
+            current_figure = spawn();
+        }
+
         drawShape(current_figure);
-        delete current_figure;
-        current_figure = spawn();
+        model->Update();
     }
-
-    drawShape(current_figure);
-    model->Update();
 }
 
 bool GameController::hasCollisionWithFieldBoard(Shape *shape)
@@ -309,4 +322,53 @@ void GameController::rotateCounterClockwise()
     {
         delete tmp;
     }
+}
+
+void GameController::Stop()
+{
+    state = GameState::STOP;
+}
+
+void GameController::Start()
+{
+    state = GameState::PLAY;
+}
+
+void GameController::Pause()
+{
+    state = GameState::PAUSE;
+}
+
+GameState GameController::GetGameState()
+{
+    return state;
+}
+
+
+bool GameController::cantMoveDownFirstSpawn(Shape* shape)
+{
+    Shape *tmp = new Shape(*shape);
+    tmp->setPositionY(tmp->getPositionY() - 1);
+    int shift_x = tmp->getPositionX() - tmp->getWidth() / 2;
+    int shift_y = tmp->getPositionY() - tmp->getHeight() / 2;
+    for (int y = 0; y < tmp->getHeight(); y++)
+    {
+        for (int x = 0; x < tmp->getWidth(); x++)
+        {
+            if (tmp->getMatrix()[y][x] > 0)
+            {
+                int x_i = shift_x + x;
+                int y_i = shift_y + y;
+                if (x_i < 0 || x_i > model->getWidth() - 1 || y_i < 0 )
+                {
+                    return true;
+                }
+                else if ((*model)(y_i, x_i) > 0)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
