@@ -162,7 +162,12 @@ void GameController::Update()
                 break;
             }
         }
-        score += checkFullRowLine();
+        int new_score_point = checkFullRowLine();
+        score += new_score_point;
+        if(new_score_point > 0)
+        {
+            updateInterval -= new_score_point / 1000.0f;
+        }
         std::cout << score << std::endl;
         /*
         if (cantMoveDown(current_figure))

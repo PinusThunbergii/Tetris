@@ -1,7 +1,7 @@
 #include "GameFieldView.h"
 
 GameFieldView::GameFieldView(): 
-    cell_size(30), borderWidth(2), 
+    cell_size(35), borderWidth(0.5), 
     borderColor(Color4F::GRAY), infillColor(Color4F(0.0f, 0.0f, 0.0f, 0.0f))
 {
 }

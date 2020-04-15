@@ -26,8 +26,8 @@ protected:
 private:
     void drawField(GameFieldModel* pFieldModel);
     GameFieldView();
-    int cell_size;
-    int borderWidth;
+    float cell_size;
+    float borderWidth;
     Color4F borderColor;
     Color4F infillColor;
     DrawNode* rectNode;

@@ -35,6 +35,7 @@ bool GameScene::init()
     
     controller = new GameController();
     fieldModel = new GameFieldModel(10, 20);
+    //fieldModel = new GameFieldModel(20, 40);
     fieldView = GameFieldView::create();
     fieldView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     fieldView->setPosition(center);
