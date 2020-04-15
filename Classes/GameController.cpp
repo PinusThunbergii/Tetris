@@ -1,7 +1,7 @@
 #include "GameController.h"
 
 GameController::GameController() : distribution(1, 7), model(nullptr),
-                                   updateInterval(0.1f), current_figure(nullptr), score(0),
+                                   updateInterval(0.25f), current_figure(nullptr), score(0),
                                    generator(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count())
 {
     //current_figure = spawn();
@@ -44,7 +44,7 @@ Shape *GameController::spawn()
         break;
     }
     s->setPositionX(model->getWidth() / 2);
-    s->setPositionY(model->getHeight()+2);
+    s->setPositionY(model->getHeight());
     return s;
 }
 
