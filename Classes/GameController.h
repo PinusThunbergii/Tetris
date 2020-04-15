@@ -8,6 +8,8 @@
 #include "GameFieldView.h"
 #include "Shape.h"
 
+//#define SPAWN_ONLY_CUBE 
+
 enum GameState{
     PAUSE,
     PLAY,
@@ -47,11 +49,12 @@ private:
     bool cantMoveDown(Shape* shape);
     bool cantMoveDownFirstSpawn(Shape* shape);
     void destroyFilledLines();
-    void moveLeft();
-    void moveRight();
-    void moveDown();
+    bool moveLeft();
+    bool moveRight();
+    bool moveDown();
     void rotateClockwise();
     void rotateCounterClockwise();
+    int checkFullRowLine();
     GameState state;
 protected:  
 };

@@ -15,6 +15,9 @@ Shape *GameController::spawn()
 {
     int rand = distribution(generator);
     Shape *s;
+#ifdef SPAWN_ONLY_CUBE
+    s = new Shape(O);
+#else
     switch (rand)
     {
     case 1:
@@ -43,6 +46,7 @@ Shape *GameController::spawn()
         return nullptr;
         break;
     }
+#endif // SPAWN_ONLY_CUBE       
     s->setPositionX(model->getWidth() / 2);
     s->setPositionY(model->getHeight());
     return s;
@@ -119,7 +123,14 @@ void GameController::Update()
             {
                 state = GameState::GAMEOVER; 
             }*/
-            moveDown();
+            if(!moveDown())
+            {
+                drawShape(current_figure);
+                model->Update();
+                delete current_figure;
+                current_figure = nullptr;
+                return;
+            }
             
         }
 
@@ -151,14 +162,16 @@ void GameController::Update()
                 break;
             }
         }
-
+        score += checkFullRowLine();
+        std::cout << score << std::endl;
+        /*
         if (cantMoveDown(current_figure))
         {
             drawShape(current_figure);
             delete current_figure;
             current_figure = spawn();
         }
-
+        */
         drawShape(current_figure);
         model->Update();
     }
@@ -244,7 +257,7 @@ void GameController::destroyFilledLines()
     }
 }
 
-void GameController::moveLeft()
+bool GameController::moveLeft()
 {
     Shape *tmp;
     tmp = new Shape(*current_figure);
@@ -253,14 +266,16 @@ void GameController::moveLeft()
     {
         delete current_figure;
         current_figure = tmp;
+        return true;
     }
     else
     {
         delete tmp;
+        return false;
     }
 }
 
-void GameController::moveRight()
+bool GameController::moveRight()
 {
     Shape *tmp;
     tmp = new Shape(*current_figure);
@@ -269,14 +284,16 @@ void GameController::moveRight()
     {
         delete current_figure;
         current_figure = tmp;
+        return true;
     }
     else
     {
         delete tmp;
+        return false;
     }
 }
 
-void GameController::moveDown()
+bool GameController::moveDown()
 {
     Shape *tmp;
     tmp = new Shape(*current_figure);
@@ -285,10 +302,12 @@ void GameController::moveDown()
     {
         delete current_figure;
         current_figure = tmp;
+        return true;
     }
     else
     {
         delete tmp;
+        return false;
     }
 }
 
@@ -371,4 +390,48 @@ bool GameController::cantMoveDownFirstSpawn(Shape* shape)
         }
     }
     return false;
+}
+
+int GameController::checkFullRowLine()
+{
+    int destroyed_rows = 0;
+    for (int y_i = 0; y_i < model->getHeight(); y_i++)
+    {
+        int checked_columns = 0;
+        for (int x_i = 0; x_i < model->getWidth(); x_i++)
+        {
+            if((*model)(y_i, x_i) == 0) // if detect gap skip row
+            {
+                break;
+            }
+            else
+            {
+                checked_columns++;
+            }
+            
+        }
+        if(checked_columns == model->getWidth()) // detected full line
+        {
+            //clear that line
+            /*for (int x_i = 0; x_i < model->getWidth(); x_i++)
+            {
+                (*model)(y_i, x_i) = 0;
+            }*/
+
+            for(int y_j = y_i + 1; y_j < model->getHeight(); y_j++)
+            {
+                for (int x_i = 0; x_i < model->getWidth(); x_i++)
+                {
+                    (*model)(y_j - 1, x_i) = (*model)(y_j, x_i);
+                }
+            }
+            destroyed_rows++;
+        }
+    }
+    return destroyed_rows;
+}
+
+int GameController::GetScore()
+{
+    return score;
 }

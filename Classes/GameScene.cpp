@@ -43,6 +43,11 @@ bool GameScene::init()
     controller->ConnectModel(fieldModel);
     this->addChild(fieldView);
 
+    score = Label::createWithTTF("", "fonts/Marker Felt.ttf", 40.0f);
+    score->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    score->setPosition(Vec2(0.0f, center.y));
+    this->addChild(score);
+
     this->scheduleUpdate();
     controller->Start();
     return true;
@@ -83,6 +88,7 @@ void GameScene::keyReleased(EventKeyboard::KeyCode keyCode, Event *event)
 void GameScene::update(float dt)
 {
     controller->Update();
+    score->setString(std::to_string(controller->GetScore()));
     if(controller->GetGameState() == GameState::GAMEOVER)  
     {
         std::cout << "Gameover" << std::endl;

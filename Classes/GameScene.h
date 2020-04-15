@@ -19,6 +19,7 @@ public:
 private:
     Button* backButton;
     Sprite* box;
+    Label* score;
     static void onClick_backButton(Ref *sender);
     void keyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     void keyReleased(EventKeyboard::KeyCode keyCode, Event* event);
