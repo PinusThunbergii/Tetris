@@ -92,10 +92,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //dynamic_cast<GLViewImpl*>(director->getOpenGLView())->setFullscreen();
     //dynamic_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView())->setFrameSize(1600, 960);
     // turn on display FPS
-    director->setDisplayStats(true);
+    //director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0f / 600);
+    director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::EXACT_FIT);

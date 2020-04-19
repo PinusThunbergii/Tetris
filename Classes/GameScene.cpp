@@ -1,6 +1,4 @@
 #include "GameScene.h"
-#include "StartScene.h"
-#include "Shape.h"
 
 GameScene::~GameScene()
 {
@@ -17,9 +15,9 @@ bool GameScene::init()
         return false;
     }
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 center = Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    visibleSize = Director::getInstance()->getVisibleSize();
+    center = Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
+    origin = Director::getInstance()->getVisibleOrigin();
 
     backButton = Button::create("icons/back.png", "icons/back_selected.png");
     backButton->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -89,10 +87,16 @@ void GameScene::keyReleased(EventKeyboard::KeyCode keyCode, Event *event)
 void GameScene::update(float dt)
 {
     controller->Update();
-    score->setString(std::to_string(controller->GetScore()));
+    std::string score_str("Score: ");
+    int score_num = controller->GetScore();
+    score_str += std::to_string(score_num);
+    score->setString(score_str);
     if(controller->GetGameState() == GameState::GAMEOVER)  
     {
         std::cout << "Gameover" << std::endl;
+        gameoverLayer = GameOverLayer::createWithScore(score_num);
+        this->addChild(gameoverLayer);
+        this->unscheduleUpdate();
     } 
 }
 

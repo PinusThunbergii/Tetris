@@ -1,9 +1,11 @@
 #pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "StartScene.h"
 #include "GameFieldView.h"
 #include "GameFieldModel.h"
 #include "GameController.h"
+#include "GameOverLayer.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
@@ -26,4 +28,8 @@ private:
     GameFieldView* fieldView;
     GameFieldModel* fieldModel;
     GameController* controller;
+    GameOverLayer* gameoverLayer;
+    Vec2 center;
+    Vec2 origin;
+    Size visibleSize;
 };

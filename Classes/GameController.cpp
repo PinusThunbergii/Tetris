@@ -1,7 +1,7 @@
 #include "GameController.h"
 
 GameController::GameController() : distribution(1, 7), model(nullptr),
-                                   updateInterval(0.15f), current_figure(nullptr), score(0), state(GameState::PAUSE),
+                                   updateInterval(0.2f), current_figure(nullptr), score(0), state(GameState::PAUSE),
                                    generator(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count())
 {
     //current_figure = spawn();
@@ -142,16 +142,19 @@ void GameController::Update()
 
             switch (keyCode)
             {
-
+            case EventKeyboard::KeyCode::KEY_UP_ARROW:
             case EventKeyboard::KeyCode::KEY_W:
                 rotateClockwise();
                 break;
+            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:    
             case EventKeyboard::KeyCode::KEY_A:
                 moveLeft();
                 break;
+            case EventKeyboard::KeyCode::KEY_DOWN_ARROW:    
             case EventKeyboard::KeyCode::KEY_S:
                 rotateCounterClockwise();
                 break;
+            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:    
             case EventKeyboard::KeyCode::KEY_D:
                 moveRight();
                 break;
@@ -166,7 +169,7 @@ void GameController::Update()
         score += new_score_point;
         if(new_score_point > 0)
         {
-            updateInterval -= new_score_point / 1000.0f;
+            updateInterval -= new_score_point / 100000.0f;
         }
         std::cout << score << std::endl;
         /*

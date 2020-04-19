@@ -12,14 +12,13 @@ GameFieldView *GameFieldView::create()
     if (pRet && pRet->init())
     {
         pRet->autorelease();
-        return pRet;
     }
     else
     {
         delete pRet;
         pRet = nullptr;
-        return nullptr;
     }
+    return pRet;
 }
 
 bool GameFieldView::init()

@@ -60,6 +60,7 @@ list(APPEND GAME_SOURCE
      Classes/TouchScene.cpp
      Classes/StartScene.cpp
      Classes/SettingsScene.cpp
+     Classes/GameOverLayer.cpp
      Classes/GameScene.cpp
      Classes/Shape.cpp
      Classes/GameFieldView.cpp
@@ -73,6 +74,7 @@ list(APPEND GAME_HEADER
      Classes/TouchScene.h
      Classes/StartScene.h
      Classes/SettingsScene.h
+     Classes/GameOverLayer.h
      Classes/GameScene.h
      Classes/Shape.h
      Classes/GameFieldView.h
